@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "./interfaces/IERC6551Account.sol";
 import "./interfaces/IERC6551Executable.sol";
 
-contract ExampleERC6551Account is
+contract ERC6551Account is
     IERC165,
     IERC1271,
     IERC6551Account,
