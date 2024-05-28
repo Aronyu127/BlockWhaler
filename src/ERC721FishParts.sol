@@ -6,7 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ERC721FishParts is ERC721, ERC721URIStorage, Ownable {
+import "./interfaces/IERC721FishParts.sol";
+
+contract ERC721FishParts is ERC721, ERC721URIStorage, Ownable, IERC721FishParts {
     uint256 private _nextTokenId;
 
     constructor(
