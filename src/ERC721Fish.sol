@@ -40,10 +40,10 @@ contract ERC721Fish is ERC721, ERC721URIStorage, Ownable, ERC6551Registry {
 
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address _to, string memory _uri) public onlyOwner {
         uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
+        _safeMint(_to, tokenId);
+        _setTokenURI(tokenId, _uri);
 
         address erc721FishAddress = address(this);
         IERC6551Registry _erc6551Registry = IERC6551Registry(_erc6551RegistryAddress);
