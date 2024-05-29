@@ -12,9 +12,13 @@ import "./interfaces/IERC721FishParts.sol";
 import "./ERC721FishParts.sol";
 import "./ERC6551Registry.sol";
 import "./ERC6551Account.sol";
+import "./TBAAount.sol";
+
+
+import "hardhat/console.sol";
 
 contract ERC721Fish is ERC721, ERC721URIStorage, Ownable, ERC6551Registry {
-    mapping(string => address) fishParts;
+    mapping(string => address) public fishParts;
     uint256 private _nextTokenId;
     mapping(uint => uint) private _ratios;
     mapping(uint => address) private _tbaFishAddresses;
@@ -26,21 +30,23 @@ contract ERC721Fish is ERC721, ERC721URIStorage, Ownable, ERC6551Registry {
         address initialOwner
     ) ERC721("Fish", "FishNFT") Ownable(initialOwner) {
         _erc6551RegistryAddress = address(new ERC6551Registry());
-        _erc6551AccountAddress = address(new ERC6551Account());
+        _erc6551AccountAddress = address(new TBAAount());
 
 
-        fishParts["Head"] = address(new ERC721FishParts(initialOwner, "Head", "head"));
-        fishParts["Eye"] = address(new ERC721FishParts(initialOwner, "Eye", "eye"));
-        fishParts["Tail"] = address(new ERC721FishParts(initialOwner, "Tail", "tail"));
+        address erc721FishAddr = address(this);
+        fishParts["Head"] = address(new ERC721FishParts(erc721FishAddr, "Head", "head"));
+        fishParts["Eye"] = address(new ERC721FishParts(erc721FishAddr, "Eye", "eye"));
+        fishParts["Tail"] = address(new ERC721FishParts(erc721FishAddr, "Tail", "tail"));
         fishParts["Background"] = address(new ERC721FishParts(
-            initialOwner,
+            erc721FishAddr,
             "Background",
             "background"
         ));
 
     }
 
-    function safeMint(address _to, string memory _uri) public onlyOwner {
+    // function safeMint(address _to, string memory _uri) public onlyOwner {
+    function safeMint(address _to, string memory _uri) public {
         uint256 tokenId = _nextTokenId++;
         _safeMint(_to, tokenId);
         _setTokenURI(tokenId, _uri);
@@ -51,11 +57,13 @@ contract ERC721Fish is ERC721, ERC721URIStorage, Ownable, ERC6551Registry {
 
         _setTBAFish(tokenId, tbaFishAddress);
         _setRatio(tokenId);
-        // _safeMintFishParts(tokenId);
+        _safeMintFishParts(tokenId);
     }
 
     function _safeMintFishParts(uint _tokenId) internal {
         address _tbaFishAddress = _tbaFishAddresses[_tokenId];
+        console.log("_tbaFishAddress", _tbaFishAddress);
+
         _safeMintFishPart("Head", _tbaFishAddress, "");
         _safeMintFishPart("Eye", _tbaFishAddress, "");
         _safeMintFishPart("Tail", _tbaFishAddress, "");
