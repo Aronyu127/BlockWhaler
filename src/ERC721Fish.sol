@@ -15,9 +15,7 @@ import "./ERC6551Account.sol";
 import "./TBAAount.sol";
 
 
-import "hardhat/console.sol";
-
-contract ERC721Fish is ERC721, ERC721URIStorage, Ownable, ERC6551Registry {
+contract ERC721Fish is ERC721, ERC721URIStorage, Ownable {
     mapping(string => address) public fishParts;
     uint256 private _nextTokenId;
     mapping(uint => uint) private _ratios;
@@ -62,7 +60,6 @@ contract ERC721Fish is ERC721, ERC721URIStorage, Ownable, ERC6551Registry {
 
     function _safeMintFishParts(uint _tokenId) internal {
         address _tbaFishAddress = _tbaFishAddresses[_tokenId];
-        console.log("_tbaFishAddress", _tbaFishAddress);
 
         _safeMintFishPart("Head", _tbaFishAddress, "");
         _safeMintFishPart("Eye", _tbaFishAddress, "");
