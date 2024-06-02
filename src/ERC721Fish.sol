@@ -47,7 +47,8 @@ contract ERC721Fish is ERC721, ERC721URIStorage, Ownable {
     function safeMint(address _to, string memory _uri) public {
         uint256 tokenId = _nextTokenId++;
         _safeMint(_to, tokenId);
-        _setTokenURI(tokenId, _uri);
+        // _setTokenURI(tokenId, _uri);
+        _setTokenURI(tokenId, "ipfs://bafybeieoqze526y5vhz3nfdubrs77cp76y6fva7p54bic2qbajf4rtos7i/body.json");
 
         address erc721FishAddress = address(this);
         IERC6551Registry _erc6551Registry = IERC6551Registry(_erc6551RegistryAddress);
@@ -61,10 +62,10 @@ contract ERC721Fish is ERC721, ERC721URIStorage, Ownable {
     function _safeMintFishParts(uint _tokenId) internal {
         address _tbaFishAddress = _tbaFishAddresses[_tokenId];
 
-        _safeMintFishPart("Head", _tbaFishAddress, "");
-        _safeMintFishPart("Eye", _tbaFishAddress, "");
-        _safeMintFishPart("Tail", _tbaFishAddress, "");
-        _safeMintFishPart("Background", _tbaFishAddress, "");
+        _safeMintFishPart("Head", _tbaFishAddress, "ipfs://bafybeieoqze526y5vhz3nfdubrs77cp76y6fva7p54bic2qbajf4rtos7i/head-chefhat.json");
+        _safeMintFishPart("Eye", _tbaFishAddress, "ipfs://bafybeieoqze526y5vhz3nfdubrs77cp76y6fva7p54bic2qbajf4rtos7i/eye-normal%20copy.json");
+        _safeMintFishPart("Tail", _tbaFishAddress, "ipfs://bafybeieoqze526y5vhz3nfdubrs77cp76y6fva7p54bic2qbajf4rtos7i/tail-llifebuoy.json");
+        _safeMintFishPart("Background", _tbaFishAddress, "ipfs://bafybeieoqze526y5vhz3nfdubrs77cp76y6fva7p54bic2qbajf4rtos7i/bg-001.json");
     }
 
     function _safeMintFishPart(string memory _part, address _to, string memory _uri) internal {
